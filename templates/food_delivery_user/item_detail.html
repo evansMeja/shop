@@ -1,0 +1,337 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Item detail</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/bootstrap.min.css'%}"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick-theme.css'%}"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/nouislider.min.css'%}"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="{% static 'vendors/css/font-awesome.min.css'%}">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/style.css'%}"/>
+
+ 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+ 		<!--[if lt IE 9]>
+ 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+ 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ 		<![endif]-->
+
+    </head>
+	<body>
+		<script src="{% static 'vendors/js/jquery.min.js'%}"></script>
+		<script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
+		<script src="{% static 'vendors/js/slick.min.js'%}"></script>
+		<script src="{% static 'vendors/js/nouislider.min.j'%}"></script>
+		<script src="{% static 'vendors/js/jquery.zoom.min.js'%}"></script>
+		<script src="{% static 'vendors/js/main.js'%}"></script>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-left">
+						<li><a href="#"><i class="fa fa-phone"></i> 0740664839, 0741304346</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> </a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i>Kanduyi, Bungoma </a></li>
+					</ul>
+					<ul class="header-links pull-right">
+						<li><a href="{%url 'register'%}"><i class="fa fa-dollar"></i> Register</a></li>
+						<li><a href="{%url 'login'%}"><i class="fa fa-user-o"></i> Login</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a href="#" class="logo">
+									<img src="{%static 'images/logo.png' %}" alt="">
+								</a>
+							</div>
+						</div>
+						<!-- /LOGO -->
+
+						<!-- SEARCH BAR -->
+						<div class="col-md-6">
+							<div class="header-search">
+								<form method="POST" action="{%url 'search'%}">
+									{%csrf_token%}
+									<input class="input" name="searchitem" placeholder="Search here" required="" style="border-top-left-radius: 20px; border-bottom-left-radius:20px;">
+									<button class="search-btn">Search</button>
+								</form>
+							</div>
+						</div>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<div>
+									<a href="#">
+										<i class="fa fa-check"></i>
+										<span class="checkout">Checkout</span>
+									</a>
+								</div>
+								<!-- /Wishlist -->
+
+								<!-- Cart -->
+								<div class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i class="fa fa-shopping-cart"></i>
+										<span>Your Cart</span>
+										<div id='cart' class="qty">{{count}}</div>
+									</a>
+									<div class="cart-dropdown">
+										<div class="cart-list">
+											{%if addons%}
+											{%for x in addons%}
+											<div class="product-widget">
+												<div class="product-img">
+													<img src="{{x.actualitem.Picture.url}}" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-name"><a href="#">{{x.itemname}}</a></h3>
+													<h4 class="product-price"><span class="qty"></span>Ksh{{x.itemprice}}</h4>
+												</div>
+								
+											</div>
+											{%endfor%}
+											{%endif%}
+										</div>
+										<div class="cart-summary">
+											<small>{{count}} Item(s) selected</small>
+											<h5>SUBTOTAL: {{total}}</h5>
+										</div>
+										<div class="cart-btns">
+											<a class="checkout">View Cart</a>
+											<a class="checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+
+			
+		</header>
+		<!-- /HEADER -->
+
+   <form id="myform{{itemobj.Name}}{{itemobj.id}}" action="/addcart" method="post">
+	{%csrf_token%}
+	<input type="hidden" name="name" value="{{itemobj.Name}}">
+	</form>
+
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="breadcrumb-header">Item Detail</h3>
+						<ul class="breadcrumb-tree">
+							<li><a href="{%url 'dashboard'%}">Home</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+<div class="col-12 col-md-12 col-sm-12 col-xs-12">
+  <div class="row">
+  	<div class="col-12 col-md-6 col-sm-6 col-xs-6">
+  		<img width='70%' src='{{itemobj.Picture.url}}'>
+  	</div>
+
+  	<div class="col-12 col-md-6 col-sm-6 col-xs-6">
+  		<div class="row">
+  			<div class="col-12 col-md-12 col-sm-12 col-xs-12">
+  				Category:	{{itemobj.Category}}
+  			</div>
+  			<div class="col-12 col-md-12 col-sm-12 col-xs-12">
+  				Name: {{itemobj.Name}}
+  			</div>
+  			<div class="col-12 col-md-12 col-sm-12 col-xs-12">
+  				Price : {{itemobj.Price}}
+  			</div>
+  		</div>
+  	</div>
+  </div>
+  <div class="row">
+
+
+  	<div class="col-12 col-sm-12 col-xs-12 col-md-12">
+  	<div class="form-group">
+  		<hr/>
+  		<div class="well"><small>Product Description</small></div>
+  		<p>{{itemobj.ShortDesc}}</p>
+  	</div>
+  	</div>
+
+
+  	<div class="col-12 col-sm-12 col-xs-12 col-md-12">
+  	<div class="form-group">
+  		<hr/>
+  		<div class="well"><small>Product Detail</small></div>
+  		<p>{{itemobj.LongDesc}}</p>
+  	</div>
+  	</div>
+
+
+  	<div class="col-12 col-sm-4 col-xs-4 col-md-4">
+  	<div class="form-group">
+  		<hr/>
+  		<button id='{{itemobj.Name}}{{itemobj.id}}' class="add form-control btn btn-info">Add Item To Cart</button>
+  	</div>
+  	</div>
+  </div>
+</div>
+
+
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+							<form method="GET" id="adform" action="{%url 'savemail'%}">
+								<input class="input" id="admail" type="email" placeholder="Enter Your Email" name="email">
+								<button  class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+
+		<!-- FOOTER -->
+{%include 'snippets/footer.html'%}
+		<!-- /FOOTER -->		<!-- jQuery Plugins -->
+		<script type="text/javascript">
+
+$("#adform").submit(function(e){
+e.preventDefault();
+  $.ajax({
+		url : $(this).attr('action'),
+		type : $(this).attr('method'),
+		data : $(this).serialize(),
+		success : function(data){
+			alert("Successfully Subscribed to our newsletter! Thank You!")
+		},
+		error : function(xhr,errmsg,err) {
+		 //$('#result').html(errmsg+xhr+err);
+		 alert(err);
+		}
+	});	
+
+});
+
+
+$(".checkout").click(function(e){
+	var cartvalue = $("#cart").text();
+	if(cartvalue != '0'){
+		window.location.href='{%url 'checkout'%}';
+	}else{
+		alert("sorry your cart is empty");
+	}
+});
+
+$(".add").click(function(e){
+  var id=$(this).attr("id");
+  var formid = '#'+'myform'+id;
+  $.ajax({
+		url : $(formid).attr('action'),
+		type : $(formid).attr('method'),
+		data : $(formid).serialize(),
+		success : function(data){
+		    alert("addon added");
+		    $("#cart").text(data.count)
+		},
+		error : function(xhr,errmsg,err) {
+		 //$('#result').html(errmsg+xhr+err);
+		}
+	});	
+});
+</script>
+
+	</body>
+</html>

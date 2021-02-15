@@ -1,0 +1,35 @@
+{%extends 'layouts/base.html'%}
+{%block content%}
+<div class="container">
+	<h2>manage order</h2>
+	<table>
+		<tr>
+			<th>Item Name</th>
+			<th>Item Price</th>
+		</tr>
+
+	{%for cart in cart_list%}
+	<tr>
+		<td>{{cart.itemname}}</td>
+		<td>{{cart.itemprice}}</td>
+	</tr>
+	{%endfor%}
+	</table>
+	<button id="{{orderid}}" class="btn btn-info">Confirm Delivery</button>
+</div>
+<script type="text/javascript">
+    $("#{{orderid}}").click(function () {
+      $.ajax({
+        url: '{%url 'status'%}',
+        data: {
+          'orderid': {{orderid}}
+        },
+        dataType: 'json',
+        success: function (data) {
+        	window.location.href='{%url 'admin_dashboard'%}';
+        }
+      });
+
+    });
+</script>
+{%endblock content%}

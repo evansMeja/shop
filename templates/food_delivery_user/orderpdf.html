@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		td{
+			font-size: 12px;
+			margin-left: 90px;
+		}
+		th{
+			font-size: 14px;
+		}
+	</style>
+	<title></title>
+</head>
+<body>
+<div >
+					<center><h1>Tuzowe Orders</h1></center>
+					{%if order_list%}
+					<table style="width:100%;">
+						<tr>
+							<th>Order Number</th>
+							<th>Call Number</th>
+							<th>Order Status</th>
+						</tr>
+					{%for order in order_list%}
+					<tr>
+						<td>{{order.sessionid}}</td>
+						<td>{{order.callnumber}}</td>
+						{% if order.is_delivered %}
+						<td>delivered</td>
+						{%else%}
+						<td>not delivered</td>
+						{%endif%}					
+					</tr>
+					  
+					{%endfor%}
+					{%endif%}
+					</table>	
+</div>
+<hr>
+<center>&copy; Tuzowe 2020</center>
+</body>
+</html>

@@ -1,0 +1,184 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Item detail</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/bootstrap.min.css'%}"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick-theme.css'%}"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/nouislider.min.css'%}"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="{% static 'vendors/css/font-awesome.min.css'%}">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/style.css'%}"/>
+
+ 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+ 		<!--[if lt IE 9]>
+ 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+ 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ 		<![endif]-->
+
+    </head>
+	<body>
+		<script src="{% static 'vendors/js/jquery.min.js'%}"></script>
+		<script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
+		<script src="{% static 'vendors/js/slick.min.js'%}"></script>
+		<script src="{% static 'vendors/js/nouislider.min.j'%}"></script>
+		<script src="{% static 'vendors/js/jquery.zoom.min.js'%}"></script>
+		<script src="{% static 'vendors/js/main.js'%}"></script>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-left">
+						<li><a href="#"><i class="fa fa-phone"></i> 0740664839, 0741304346</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> </a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i>Kanduyi, Bungoma </a></li>
+					</ul>
+					<ul class="header-links pull-right">
+						<li><a href="{%url 'register'%}"><i class="fa fa-dollar"></i> Register</a></li>
+						<li><a href="{%url 'login'%}"><i class="fa fa-user-o"></i> Login</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+			
+		</header>
+		<!-- /HEADER -->
+		
+		<h3 class='alert alert-info'><center>Order Detail</center></h3>
+		
+		<div class='container'>
+		{%for x in cartitemobj%}
+		<div class='row'>
+		    <div class='col-md-3'>
+		        {{forloop.counter}}
+		    </div>
+		    <div class='col-md-3'>
+		        {{x.Name}}
+		    </div>
+		    <div class='col-md-3'>
+		        {{x.Price}}
+		    </div>
+		    <div class='col-md-3'>
+		        <img src='/media/{{x.Picture}}' height='50px'>
+		        
+		    </div>
+		</div>
+		<hr/>
+		{%endfor%}
+		<a href="{%url 'dashboard'%}">Back</a>
+		</div>
+		
+		
+		
+		
+		
+	
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+							<form method="GET" id="adform" action="{%url 'savemail'%}">
+								<input class="input" id="admail" type="email" placeholder="Enter Your Email" name="email">
+								<button  class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+
+		<!-- FOOTER -->
+{%include 'snippets/footer.html'%}
+		<!-- /FOOTER -->		<!-- jQuery Plugins -->
+		<script type="text/javascript">
+
+$("#adform").submit(function(e){
+e.preventDefault();
+  $.ajax({
+		url : $(this).attr('action'),
+		type : $(this).attr('method'),
+		data : $(this).serialize(),
+		success : function(data){
+			alert("Successfully Subscribed to our newsletter! Thank You!")
+		},
+		error : function(xhr,errmsg,err) {
+		 //$('#result').html(errmsg+xhr+err);
+		 alert(err);
+		}
+	});	
+
+});
+
+
+$(".checkout").click(function(e){
+	var cartvalue = $("#cart").text();
+	if(cartvalue != '0'){
+		window.location.href='{%url 'checkout'%}';
+	}else{
+		alert("sorry your cart is empty");
+	}
+});
+
+$(".add").click(function(e){
+  var id=$(this).attr("id");
+  var formid = '#'+'myform'+id;
+  $.ajax({
+		url : $(formid).attr('action'),
+		type : $(formid).attr('method'),
+		data : $(formid).serialize(),
+		success : function(data){
+		    alert("addon added");
+		    $("#cart").text(data.count)
+		},
+		error : function(xhr,errmsg,err) {
+		 //$('#result').html(errmsg+xhr+err);
+		}
+	});	
+});
+</script>
+
+	</body>
+</html>

@@ -1,0 +1,300 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Checkout</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/bootstrap.min.css'%}"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick-theme.css'%}"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/nouislider.min.css'%}"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="{% static 'vendors/css/font-awesome.min.css'%}">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/style.css'%}"/>
+
+    </head>
+	<body>
+		<script src="{% static 'vendors/js/jquery.min.js'%}"></script>
+		<script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
+		<script src="{% static 'vendors/js/slick.min.js'%}"></script>
+		<script src="{% static 'vendors/js/nouislider.min.j'%}"></script>
+		<script src="{% static 'vendors/js/jquery.zoom.min.js'%}"></script>
+		<script src="{% static 'vendors/js/main.js'%}"></script>
+
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+		{%include 'snippets/navbarnew.html'%}
+			<!-- /TOP HEADER -->
+		</header>
+		<!-- /HEADER -->
+
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+
+				<!-- CHEKOUT -->
+				<div class="row">
+					<div class="col-md-7">
+						<h4 class="well">Items in Cart</h4>
+						
+						<input type='hidden' id='encoded_data' value='{{encoded_cart_data}}'>
+				
+				<div id="cartDisplay">
+			
+				
+				</div>
+				
+				
+					<hr/>
+					<button class="btn btn-info"><a href="{%url 'index' %}">Continue Shopping</a></button>
+					</div>
+					<div class="col-md-5">
+						<h4 class="well">Order Summary</h4>
+						<div class="well">Total Items in cart = <span id="itemcount">0</span></div>
+						<div class="well">Total Budget = <span id="subtotal">0</span></div>
+
+						<div class="row">
+							<div class="col-6 col-md-6 col-sm-6">
+							
+						<div class="form-group">
+							<button id='requestcall' class="form-control btn btn-info">Request Call </button>
+						</div>	
+							</div>
+							<div class="col-6 col-md-6 col-sm-6">
+								
+						<div class="form-group">
+							<a href='tel:0740664839' class="form-control btn btn-info">Call for Delivery</a>
+						</div>
+
+							</div>
+						</div>
+
+
+	<form id='create_order' action="{%url 'create_order'%}" method="GET">{%csrf_token%}
+	<input type="hidden" name="callphone" id='callphone' value="{{request.user.username}}">
+	<input type="hidden" name="sessionid" id='sessionid' value="{{request.session.cartid}}">
+   </form>
+
+   <form id='registerform' style="display: none" action="{%url 'validate_register'%}" method="post">
+   	{%csrf_token%}
+  	<div class="form-group">
+   		<input type="text"class="form-control" placeholder="Firstname e.g John" name="fname">
+   	</div>
+   	<div class="form-group">
+   		<input type="Phonenumber"class="form-control" placeholder="Lastname e.g Kerubo" name="lname">
+   	</div>
+   	<div class="form-group">
+   		<input type="tel" pattern="[0]{1}[7]{1}[0-9]{8}" class="form-control" placeholder="Contact e.g 0712345678" name="phone">
+   	</div>
+   	   	<div class="form-group">
+   		<input type="password"class="form-control" placeholder="Password" name="password">
+   		</div>
+   		 <div class="form-group">
+   		<input type="submit"class="form-control btn btn-info" value="Register" name="password">
+   		</div>
+
+   	<div>Already have Account?<a id='login' class="userchoice"> Login</a> </div>
+   	
+   </form>
+
+
+     <form id='loginform'  style="display: none" action="{%url 'validate_login'%}" method="post">{%csrf_token%}
+   		<div class="form-group">
+   		<input id='lgphone' type="tel"class="form-control" placeholder="Contact e.g 0712345678" name="phone" required>
+   		</div>
+   	   	<div class="form-group">
+   		<input id='lgpassword' type="password"class="form-control" placeholder="Password" name="password" required>
+   		</div>
+   		 <div class="form-group">
+   		  <button class="form-control" id='loginBtn'>Login</button>
+   		</div>
+
+   		<div>Dont have Account?<a id='register' class="userchoice"> Register</a></div>
+   		
+   </form>
+
+
+   <div id='getuserchoice' style="display: none">
+   	<div class="alert alert-warning">login or create account to complete order</div>
+   	<a id='login' class="userchoice">Login?</a> 
+   	<a id='register' class="userchoice">Register?</a>
+   </div>
+						
+
+					</div>
+				</div>
+				<!-- /CHECKOUT -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+		<!-- /NEWSLETTER -->
+
+		<!-- FOOTER -->
+		{%include 'snippets/footer.html'%}
+		<!-- /FOOTER -->
+<script type="text/javascript">
+
+function appendCartItems(selectedItem,i){
+    cartItemCode = '<div class="row"><div class="col-sm-4 col-xs-4 co-4 col-md-4"><img height="100px" src="';
+    cartItemCode = cartItemCode + '/media/' + selectedItem.Picture;
+    cartItemCode = cartItemCode + '"></div><div class="co-2 col-sm-2 col-xs-2 col-md-2">';
+    cartItemCode = cartItemCode + selectedItem.Name;
+    cartItemCode = cartItemCode + '</div><div class="co-3 col-sm-3 col-xs-3 col-md-3">';
+    cartItemCode = cartItemCode + selectedItem.Price;
+    cartItemCode = cartItemCode + '</div><div class="col-sm-3 col-xs-3 co-3 col-md-3"><a href="#" class="rem" id="';
+    cartItemCode = cartItemCode + i;
+    cartItemCode = cartItemCode + '">Remove</a></div></div>';
+    $("#cartDisplay").append(cartItemCode);
+}
+
+
+function createordfunc(mydata){
+    $.ajax({
+        url: '{%url "create_order"%}',
+        type: 'GET',
+        contentType: 'application/json',
+        data: {'data':JSON.stringify(mydata)},
+        success: function(data) {
+            if(data.user_is_authenticated){
+                window.location.href="{%url 'dashboard'%}";
+            }else{
+                authenticate_user();
+            }
+        },
+        error : function(xhr,errmsg,err) {
+         console.log(xhr.responseText);
+        }
+    });
+}
+
+
+
+function removeItem(data,main){
+    $("#cartDisplay").html("");
+    main.counter= main.counter - 1;
+    main.subtotal= main.subtotal - main.cartItems[data].price_obj[0].Price;
+    $("#itemcount").text(main.counter);
+    $("#subtotal").text(main.subtotal);
+    main.cartItems.splice(data, 1);
+    for(var i = 0; i<main.cartItems.length;i++){
+        appendCartItems(main.cartItems[i].price_obj[0],i);
+    }
+}
+
+
+$(document).ready(function(){
+    var data = $("#encoded_data").val();
+    var data = JSON.parse(decodeURIComponent(data))
+    $("#subtotal").text(data.subtotal);
+    $("#itemcount").text(data.counter);
+    for(var i = 0; i<data.cartItems.length;i++){
+        appendCartItems(data.cartItems[i].price_obj[0],i);
+    }
+    (function(data){
+        $("#requestcall").click(function(e){
+            createordfunc(data);
+        });   
+    })(data);
+    
+    $(document).on('click', '.rem', function() {
+      removeItem($(this).attr("id"),data);
+    });
+    
+  });
+  
+ 
+
+
+
+$("#loginform").submit(function(e){
+e.preventDefault();
+var phone = $("#lgphone");
+var password = $("#lgpassword");
+  $.ajax({
+		url : $(this).attr('action'),
+		type : $(this).attr('method'),
+		data : $(this).serialize(),
+		success : function(data){
+		    if(data.is_authenticated){
+		    	$("#loginform").css("display","none");
+				$("#registerform").css("display","none");
+                var encodeddata = $("#encoded_data").val();
+                var encodeddata = JSON.parse(decodeURIComponent(encodeddata))
+                createordfunc(encodeddata);
+		    }
+		    else{
+		    	alert("Wrong login details");
+		    }
+		},
+		error : function(xhr,errmsg,err) {
+		 console.log(xhr.responseText);
+		}
+	});	
+
+});
+
+$("#registerform").submit(function(e){
+e.preventDefault();
+  $.ajax({
+		url : $(this).attr('action'),
+		type : $(this).attr('method'),
+		data : $(this).serialize(),
+		success : function(data){
+		    if(data.is_authenticated){
+		    	$("#loginform").css("display","none");
+				$("#registerform").css("display","none");
+                var encodeddata = $("#encoded_data").val();
+                var encodeddata = JSON.parse(decodeURIComponent(encodeddata))
+                createordfunc(encodeddata);
+		    }
+		    else{
+		    	alert("Unable to connect");
+		    }
+		},
+		error : function(xhr,errmsg,err) {
+		 console.log(xhr.responseText);
+		 alert(err);
+		}
+	});	
+
+});
+
+function authenticate_user(){
+    $("#getuserchoice").css("display","block");
+    $("#loginform").css("display","none");
+    $("#registerform").css("display","none");
+}
+
+$(".userchoice").click(function(){
+    var choice = $(this).attr('id');
+    $("#getuserchoice").css("display","none");
+    if(choice == 'login'){
+    	$("#loginform").css("display","block");
+    	$("#registerform").css("display","none");
+    }
+    if(choice == 'register'){
+    	$("#loginform").css("display","none");
+    	$("#registerform").css("display","block");
+    }
+});
+</script>
+		<!-- jQuery Plugins -->
+	</body>
+</html>

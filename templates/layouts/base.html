@@ -1,0 +1,118 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Dashboard</title>
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/bootstrap.min.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/slick-theme.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/nouislider.min.css'%}"/>
+ 		<link rel="stylesheet" href="{% static 'vendors/css/font-awesome.min.css'%}">
+ 		<link type="text/css" rel="stylesheet" href="{% static 'vendors/css/style.css'%}"/>
+ 		<link type="text/css" rel="stylesheet" href="https://cdn.3up.dk/mdi@2.2.43/css/materialdesignicons.min.css"/>
+ 		
+		<script src="{% static 'vendors/js/jquery.min.js'%}"></script>
+		<script src="{% static 'vendors/js/bootstrap.min.js'%}"></script>
+		<script src="{% static 'vendors/js/slick.min.js'%}"></script>
+		<script src="{% static 'vendors/js/nouislider.min.j'%}"></script>
+		<script src="{% static 'vendors/js/jquery.zoom.min.js'%}"></script>
+		<script src="{% static 'https://cdn.3up.dk/jquery@3.3.1/dist/jquery.slim.min.js"></script>
+		
+		<script src="{% static 'vendors/js/main.js'%}"></script>
+		
+        <style>
+            .LockOn {
+                display: block;
+                visibility: visible;
+                position: absolute;
+                z-index: 999;
+                top: 0px;
+                left: 0px;
+                width: 105%;
+                height: 105%;
+                background-color:white;
+                vertical-align:bottom;
+                padding-top: 20%; 
+                filter: alpha(opacity=75); 
+                opacity: 0.6; 
+                font-size:large;
+                color:blue;
+                font-style:italic;
+                font-weight:400;
+                background: blue;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;
+            }
+            
+    .faq {
+    padding: 60px 0;
+    }
+    .faq .faq-list {
+    padding: 0;
+    list-style: none;
+    }
+    .faq .faq-list li {
+    background-color: #ffee5a;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px 40px;
+    }
+    .faq .faq-list a {
+    display: block;
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    text-decoration: none;
+    }
+    
+    .faq .faq-list i {
+    font-size: 16px;
+    position: absolute;
+    left: -25px;
+    top: 6px;
+    transition: 1s;
+    }
+    .faq-title {
+    text-align: center;
+    font-size: 17px;
+    border-bottom: 2px dashed #ffffff;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    color: #ffffff;
+    }
+    
+    .faq .faq-list p {
+    padding-top: 5px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    }
+    
+    .collapsed i.fa.fa-arrow-up {
+    
+    }
+    .collapsed i.fa.fa-arrow-up {
+    transform: rotate(180deg);
+    }
+        </style>
+    </head>
+	<body>
+        <header>
+    		{%include 'snippets/navbarnew.html'%}
+    	</header>
+    	<div id="coverScreen"  class="LockOn"></div>
+    	 {%block content%}
+    	 {%endblock content%}
+         {%include 'snippets/footer.html'%}
+         <script>
+             $(window).on('load', function () {
+                $("#coverScreen").hide();
+            });
+        </script>
+	</body>
+</html>

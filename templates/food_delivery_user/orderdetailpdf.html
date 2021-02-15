@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		td{
+			font-size: 12px;
+			margin-left: 90px;
+		}
+		th{
+			font-size: 14px;
+		}
+	</style>
+	<title></title>
+</head>
+<body>
+<div >
+					<center><h1>Tuzowe Orders</h1></center>
+					<table style="width:100%;">
+						<tr>
+							<th>Item Number</th>
+							<th>Item Name</th>
+							<th>Item Price</th>
+						</tr>
+					{%for x in cartitemobj%}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{x.Name}}</td>
+						
+						<td>{{x.Price}}</td>
+					</tr>
+					  
+					{%endfor%}
+					
+					</table>	
+</div>
+<hr>
+<center>&copy; Tuzowe 2020</center>
+</body>
+</html>

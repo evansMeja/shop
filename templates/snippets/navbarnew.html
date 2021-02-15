@@ -1,0 +1,32 @@
+{%if not request.user.is_authenticated%}
+      <div id="top-header">
+        <div class="container">
+          <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> 0740664839, 0741304346</a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i>contact@tuzowe.co.ke </a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i>Kanduyi, Bungoma </a></li>
+          </ul>
+          <ul class="header-links pull-right">
+            <li><a href="{%url 'index'%}"><i class="fa fa-dollar"></i>Shop</a></li>
+            <li><a href="{%url 'register'%}"><i class="fa fa-dollar"></i> Register</a></li>
+            <li><a href="{%url 'login'%}"><i class="fa fa-user-o"></i> Login</a></li>
+          </ul>
+        </div>
+      </div>
+      {%else%}
+      <div id="top-header">
+        <div class="container">
+          <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> 0740664839, 0741304346</a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i>contact@tuzowe.co.ke </a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i>Kanduyi, Bungoma </a></li>
+          </ul>
+          <ul class="header-links pull-right">
+            <li><a href="{%url 'index'%}"><i class="fa fa-dollar"></i>Shop</a></li>
+            <li><a href="{%url 'dashboard'%}"><i class="fa fa-dollar"></i> My Account</a></li>
+            <li><a href="{%url 'Logout'%}"><i class="fa fa-dollar"></i> Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      {%endif%}
+

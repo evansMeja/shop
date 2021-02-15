@@ -1,0 +1,55 @@
+body{
+    background-color: black;
+}
+.main{
+	border-radius: 20px;
+	margin-left: 33vw;
+    width: 33vw;
+    margin-top: 25vh;
+    background-color: white;
+    height: 50vh;
+}
+form{
+	display: inline-block;
+	width: 100%;
+}
+input{
+	border-radius: 100px;
+	margin-bottom: 10px;
+	margin-left: 5%;
+	width: 90%;
+	height: 6vh;
+
+}
+select{
+	border-radius: 100px;
+	margin-bottom: 15px;
+	margin-left: 5%;
+	width: 90%;
+	height: 6vh;
+
+}
+option{
+	border-radius: 100px;
+	margin-bottom: 10px;
+	margin-left: 5%;
+	width: 90%;
+	height: 6vh;
+
+}
+@media only screen and (max-width: 600px){
+	.main{
+	border-radius: 20px;
+	margin-left: 5vw;
+    width: 90vw;
+    margin-top: 25vh;
+    background-color: white;
+    height: 100vh;
+}
+select{
+	height: 10vh;
+}
+input{
+	height: 10vh;
+}
+}

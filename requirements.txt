@@ -1,0 +1,5 @@
+Django==2.2.10
+twilio==6.36.0
+Pillow==7.0.0
+mysqlclient
+xhtml2pdf

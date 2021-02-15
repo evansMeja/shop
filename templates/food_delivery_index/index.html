@@ -1,0 +1,422 @@
+{%extends 'layouts/base.html'%}
+{%block content%}
+		<!-- HEADER -->
+		<header>
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+									<div style="font-size: 50px; margin-top: none; color: white; font-family: georgia; font-weight: bold;">Tuzowe</div>
+								
+							</div>
+						</div>
+						<!-- /LOGO -->
+
+						<!-- SEARCH BAR -->
+						<div class="col-md-6">
+							<div class="header-search" style="text-align: center;">
+								<form id="searchbar"  method="POST" action="{%url 'search'%}">
+									{%csrf_token%}
+									<input id="searchitem" class="input" name="searchitem" placeholder="Search here" style="border-top-left-radius: 20px; border-bottom-left-radius:20px;" required>
+									<button class="search-btn">Search</button>
+								</form>
+							</div>
+						</div>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<div>
+									<a href="#">
+										<i class="fa fa-check"></i>
+										<span class="checkout">Checkout</span>
+									</a>
+								</div>
+								<!-- /Wishlist -->
+
+								<!-- Cart -->
+								<div class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i class="fa fa-shopping-cart"></i>
+										<span>Your Cart</span>
+										<div id='cart' class="qty">0</div>
+									</a>
+									<div class="cart-dropdown">
+										<div id="cartlist" class="cart-list">
+										    
+											
+											
+										</div>
+										<div class="cart-summary">
+											<small> <span id="itemcount">0</span> Item(s) selected</small>
+											<h5>SUBTOTAL: <span id="subtotal">0</span></h5>
+										</div>
+										<div class="cart-btns">
+											<a class="checkout">View Cart</a>
+											<a class="checkout">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						{% for x in category_list %}
+						<li><a href="/#cat{{forloop.counter}}">{{x.Name}}</a></li>
+						{%endfor%}
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+
+		{%for x,y in mydict.items%}	
+
+		<!-- SECTION -->
+		<div class="section">
+		<!-- container -->
+			<div class="container">
+			<!-- row -->
+			
+			
+
+
+<div id='searchresults' class='row'>
+
+</div>
+			
+			
+<div class="row">
+
+					<!-- section title -->
+					<div class="col-md-12">
+						<div class="section-title">
+							<div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                            </div>
+							<h4 class="title" id="cat{{forloop.counter}}">	{{x}}</h4>
+							<div class="section-nav">
+								<ul class="section-tab-nav tab-nav">
+									{%for x in category_list%}
+									<li><a data-toggle="tab" href="/#cat{{forloop.counter}}">{{x.Name}}</a></li>
+									{%endfor%}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /section title -->
+
+					<!-- Products tab & slick -->
+					<div class="col-md-12">
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+								<div id="tab1" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-1">
+
+										{%for w in y%}
+										<form id="myform{{w.Name}}{{w.id}}{{x.Name}}{{x.id}}" action="{% url 'addcart'%}" method="post">{%csrf_token%}
+										<input type="hidden" name="name" value="{{w.Name}}">
+										</form>
+
+
+										<!-- product -->
+										<div class="col-md-3 col-sm-6 col-xs-6 col-6">
+										<div class="product">
+											<div class="product-img">
+												<img height="150px" src="{{w.Picture.url}}" alt="">
+											</div>
+											<div class="product-body">
+												<h5 class="product-name"><a href="#">{{w.Name}}</a></h5>
+												<small class="product-price">{{w.Price}} <del style='color:grey;'>{{w.Price}}</del></small>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button  class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<a href='{%url "item_detail" w.id %}' class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button id='{{w.Name}}{{w.id}}{{x.Name}}{{x.id}}' class="add add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+											</div>
+										</div>
+									</div>
+										<!-- /product -->
+										{%endfor%}
+
+
+
+									</div>
+									<div id="slick-nav-1" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+							</div>
+						</div>
+					</div>
+					<!-- Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+{%endfor%}
+		<!-- HOT DEAL SECTION -->
+		<div id="hot-deal" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="hot-deal">
+							<ul class="hot-deal-countdown">
+								<li>
+									<div>
+										<h3>02</h3>
+										<span>Days</span>
+									</div>
+								</li>
+								<li>
+									<div>
+										<h3>10</h3>
+										<span>Hours</span>
+									</div>
+								</li>
+								<li>
+									<div>
+										<h3>34</h3>
+										<span>Mins</span>
+									</div>
+								</li>
+								<li>
+									<div>
+										<h3>60</h3>
+										<span>Secs</span>
+									</div>
+								</li>
+							</ul>
+							<h2 class="text-uppercase">hot deal this week</h2>
+							<p>New Collection Up to 50% OFF</p>
+							<a class="primary-btn cta-btn" href="#">Shop now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /HOT DEAL SECTION -->
+
+	
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+		
+		
+		
+
+    <form id="mycartjson" action="{%url 'checkout'%}" method='post'>{%csrf_token%}
+        <input type="hidden" id="jsoncart" name="jsoncart" value=''>
+    </form>
+		
+<script type="text/javascript">
+    class ShoppingCart {
+      constructor() {
+        this.subtotal = 0;
+        this.counter = 0;
+        this.cartItems = [];
+      }
+    }
+    
+    shoppingCartTrackerObject = new ShoppingCart();
+    
+    function appendCartItem(cartItemInstance){
+        url = '/media/' + String(cartItemInstance.price_obj['0'].Picture)
+        var newcartitemcode  = '<div class="product-widget"><div class="product-img"><img src="';
+        newcartitemcode = newcartitemcode + '/media/' + String(cartItemInstance.price_obj['0'].Picture);
+        newcartitemcode = newcartitemcode +  '" alt=""></div><div class="product-body"><h3 class="product-name">';
+        newcartitemcode = newcartitemcode + String(cartItemInstance.price_obj['0'].Name);
+        newcartitemcode = newcartitemcode +  '</h3><h4 class="product-price"><span class="qty">';
+        newcartitemcode = newcartitemcode + String(cartItemInstance.price_obj['0'].Price);
+        newcartitemcode = newcartitemcode + '</span>Ksh';
+        newcartitemcode = newcartitemcode + String({{x.itemprice.cartItems}});
+        newcartitemcode = newcartitemcode + '</h4></div></div>';
+        $("#cartlist").append(newcartitemcode);
+    }
+    
+    (function(cartTracker){
+        $(".checkout").click(function(e){
+    	    if(cartTracker.counter != '0'){
+    	        encodedjsondata = encodeURIComponent(JSON.stringify(cartTracker))
+    	        $('#jsoncart').val(encodedjsondata);
+    	        $("#mycartjson").submit();
+    	    }else{
+    		    alert("sorry your cart is empty");
+    	}});
+        
+        $(document).on('click','.add',function(e){
+          var id=$(this).attr("id");
+          var formid = '#'+'myform'+id;
+          $.ajax({
+        		url : $(formid).attr('action'),
+        		type : $(formid).attr('method'),
+        		data : $(formid).serialize(),
+        		success : function(json){
+        		    price = json.price_obj['0'].Price;
+        		    cartTracker.subtotal = cartTracker.subtotal + price;
+        		    cartTracker.counter = cartTracker.counter + 1;
+        		    cartTracker.cartItems.push(json);
+        		    appendCartItem(json);
+        		    $("#cart").text(cartTracker.counter);
+        		    $("#subtotal").text(cartTracker.subtotal);
+        		    $("#itemcount").text(cartTracker.counter);
+        		},
+        		error : function(xhr,errmsg,err) {
+        		 //$('#result').html(errmsg+xhr+err);
+        		}
+        	});	
+        });
+    
+        
+    })(shoppingCartTrackerObject);
+    
+    
+    
+    
+    $("#adform").submit(function(e){
+    e.preventDefault();
+      $.ajax({
+    		url : $(this).attr('action'),
+    		type : $(this).attr('method'),
+    		data : $(this).serialize(),
+    		success : function(data){
+    			alert("Successfully Subscribed to our newsletter! Thank You!")
+    		},
+    		error : function(xhr,errmsg,err) {
+    		 //$('#result').html(errmsg+xhr+err);
+    		 alert(err);
+    		}
+    	});	
+    
+    });
+    
+    
+    
+    function displaySearchResults(itemInstance){
+        $('#searchresults').html("");
+       for(var i=0;i<itemInstance.data.length;i++) {
+           resultcode = '<div class="col-md-3"><div class="product"><div class="product-img"><img height="150px" src="';
+           resultcode = resultcode + '/media/' + itemInstance.data[i].Picture;
+           resultcode = resultcode + '" alt=""></div><div class="product-body"><h5 class="product-name"><a href="#">';
+           resultcode = resultcode + itemInstance.data[i].Name;
+           resultcode = resultcode + '</a></h5><small class="product-price">';
+           resultcode = resultcode + itemInstance.data[i].Price;
+           resultcode = resultcode + '<del style="color:grey;">{{w.Price}}</del></small><div class="product-rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><div class="product-btns"><button  class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button><a href="#" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a></div></div><div class="add-to-cart"><button id="';
+           resultcode = resultcode + itemInstance.data[i].Name+itemInstance.data[i].id;
+           resultcode = resultcode + '" class="add add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button></div></div></div>';
+           $('#searchresults').append(resultcode);
+           formData ='<form id="myform';
+           formData = formData + itemInstance.data[i].Name + itemInstance.data[i].id + itemInstance.data[i].Name + itemInstance.data[i].id;
+           formData = formData + '" action="/addcart" method="post">{%csrf_token%}<input type="hidden" name="name" value="'
+           formData = formData + itemInstance.data[i].Name;
+           formData = formData + '"></form>';
+       }
+    }
+    
+    $("#searchbar").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+    		url : $(this).attr('action'),
+    		type : $(this).attr('method'),
+    		data : $(this).serialize(),
+    		success : function(data){
+    		    displaySearchResults(data);
+    		},
+    		error : function(xhr,errmsg,err) {
+    		 //$('#result').html(errmsg+xhr+err);
+    		 alert(err);
+    		}
+    	});	
+    });
+    
+    $( document ).ajaxStart(function() {
+      $( "body" ).css( "opacity", ".5" );
+    });
+    
+    $( document ).ajaxStop(function() {
+      $( "body" ).css( "opacity", "1" );
+    });
+</script>
+
+
+{%endblock content%}

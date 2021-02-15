@@ -1,0 +1,42 @@
+{%extends 'layouts/base.html'%}
+{%block content%}
+<div class="container">
+<h5>select category</h5>
+<form enctype="multipart/form-data" role="form" method="POST">{%csrf_token%}
+
+<div class="form-group">
+<select class="form-control" name='category'>
+	{%for x in category_list %}
+	<option value="{{x.Name}}">{{x.Name}}</option>
+	{%endfor%}
+</select>
+</div>
+
+<div class="form-group">
+	<input class="form-control" placeholder="Item name"  type="text" name="name">
+</div>
+
+<div class="form-group">
+	<input class="form-control" placeholder="item quantity" type="number" name="quantity">
+</div>
+
+<div class="form-group">
+	<textarea class="form-control"  placeholder="short description" name='shortdesc'></textarea>
+</div>
+
+<div class="form-group">
+	<textarea class="form-control" placeholder="long description" name='longdesc'></textarea>
+</div>
+
+<div class="form-group">
+	<input class="form-control" type="file" name="picture">
+</div>
+
+<div class="form-group">
+	<input class="form-control btn btn-info" type="submit" value="Add New Item For Sale">
+</div>
+</form>
+</div>
+
+
+{%endblock content%}

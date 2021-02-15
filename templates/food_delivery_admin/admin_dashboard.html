@@ -1,0 +1,41 @@
+{%extends 'layouts/base.html'%}
+{%block content%}
+<div class="container">
+<h4 class="alert alert-success">Available Orders</h4>
+{%if order_list%}
+<div class="table-responsive">
+<table style="width:100%">
+	<tr>
+		<th>Order Number</th>
+		<th>Order Id</th>
+		<th>Status</th>
+		<th>Call Number</th>
+		<th>Action</th>
+	</tr>
+
+
+{%for order in order_list%}
+<tr>
+	<td>{{forloop.counter}}</td>
+	<td>{{order.sessionid}}</td>
+	{%if order.is_delivered%}
+	<td>Delivered</td>
+	{%else%}
+	<td>Not Delivered</td>
+	{%endif%}
+	
+	<td><a href="{{order.callnumber}}">{{order.callnumber}}</a></td>
+	<td>
+		<form action="{%url 'manage_order'%}" method="post">{%csrf_token%}
+		<input type="hidden" name="sessionid" value="{{order.sessionid}}">
+		<input type="submit" name="submit" value="Manage Order"> 
+		</form>
+	</td>
+</tr>
+
+{%endfor%}
+</table>
+</div>
+{%endif%}
+</div>
+{%endblock content%}
